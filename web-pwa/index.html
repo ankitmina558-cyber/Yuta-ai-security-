@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#00F5FF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="Yuta AI — 24/7 Telegram Sticker Moderation Bot & Bilingual Assistant" />
+  <title>Yuta AI — Command Center</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Cyber Splash Screen -->
+  <div id="splash-screen" class="splash-screen" aria-hidden="true">
+    <div class="splash-inner">
+      <img src="./icons/icon-192.png" alt="Yuta AI Logo" class="splash-logo" />
+      <h1 class="splash-title">YUTA AI</h1>
+      <p class="splash-sub">24/7 Telegram Sticker &amp; Media Guard</p>
+      <div class="splash-bar"><span></span></div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <!-- Tablet / Desktop Navigation Rail -->
+    <aside class="nav-rail" aria-label="Main navigation">
+      <div class="rail-brand">
+        <img src="./icons/icon-192.png" alt="Yuta AI Official Logo" class="brand-avatar" />
+      </div>
+      <nav class="rail-links">
+        <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+        <button class="nav-btn" data-tab="scanner">Scanner</button>
+        <button class="nav-btn" data-tab="chat">AI Chat</button>
+        <button class="nav-btn" data-tab="settings">Settings</button>
+        <button class="nav-btn" data-tab="guide">Hindi Guide</button>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <!-- Chrome Install-to-Home-Screen Banner -->
+      <div id="install-banner" class="install-banner hidden">
+        <div class="install-text">
+          <strong>Install Yuta AI App</strong>
+          <span>अपने टैबलेट या मोबाइल की होम स्क्रीन पर ऐप की तरह इंस्टॉल करें।</span>
+        </div>
+        <button id="install-btn" class="btn btn-cyan">Install PWA</button>
+      </div>
+
+      <!-- TAB 1: DASHBOARD -->
+      <section id="tab-dashboard" class="tab-panel active">
+        <div class="hero-card">
+          <div class="hero-header">
+            <img src="./icons/icon-192.png" alt="Yuta AI Official Logo" class="hero-logo" />
+            <div>
+              <h2>YUTA AI</h2>
+              <p id="bot-identity-label">24/7 Sticker Moderation • Zero-Budget Cyber Guard</p>
+            </div>
+          </div>
+          <div class="status-pills">
+            <span id="tg-pill" class="pill pill-muted">TG: Disconnected</span>
+            <span id="ai-pill" class="pill pill-muted">AI: Disconnected</span>
+          </div>
+          <p id="status-note" class="muted-note">
+            Settings में अपना Shared Backend HTTPS URL और Admin Passcode डालें। Frontend में कोई Token/API key सेव नहीं होती।
+          </p>
+          <div class="hero-actions">
+            <button id="refresh-status-btn" class="btn btn-cyan">Sync Backend Now</button>
+            <button class="btn btn-purple" data-jump="settings">Backend Setup</button>
+          </div>
+        </div>
+
+        <!-- DEDICATED 24/7 STICKER SCANNER SECTION -->
+        <div class="cyber-card sticker-scanner-panel">
+          <div class="scanner-header-row">
+            <div class="scanner-title-group">
+              <img src="./icons/icon-192.png" alt="Yuta Logo" class="mini-logo" />
+              <div>
+                <h3>24/7 Sticker Scanner</h3>
+                <span class="muted-note">WEBP Static • TGS Animated (Preview) • WEBM Video</span>
+              </div>
+            </div>
+            <button id="process-queue-btn" class="btn btn-purple">Drain Queue</button>
+          </div>
+
+          <div class="metrics-grid sticker-metrics-grid">
+            <div class="metric-card cyan-glow">
+              <span class="metric-label">TOTAL STICKERS RECEIVED</span>
+              <strong id="stk-received" class="metric-value">0</strong>
+              <span class="metric-sub">Deduplicated queue</span>
+            </div>
+            <div class="metric-card blue-glow">
+              <span class="metric-label">TOTAL STICKERS SCANNED</span>
+              <strong id="stk-scanned" class="metric-value">0</strong>
+              <span class="metric-sub">AI frames verified</span>
+            </div>
+            <div class="metric-card crimson-glow">
+              <span class="metric-label">VIOLATIONS DETECTED</span>
+              <strong id="stk-violations" class="metric-value">0</strong>
+              <span class="metric-sub">VIOLATION verdicts</span>
+            </div>
+            <div class="metric-card emerald-glow">
+              <span class="metric-label">MESSAGES DELETED</span>
+              <strong id="stk-deleted" class="metric-value">0</strong>
+              <span class="metric-sub">Admin permission checked</span>
+            </div>
+            <div class="metric-card purple-glow">
+              <span class="metric-label">PENDING SCANS</span>
+              <strong id="stk-pending" class="metric-value">0</strong>
+              <span class="metric-sub">Async worker queue</span>
+            </div>
+            <div class="metric-card amber-glow">
+              <span class="metric-label">FAILED SCANS</span>
+              <strong id="stk-failed" class="metric-value">0</strong>
+              <span class="metric-sub">Never marked safe</span>
+            </div>
+            <div class="metric-card cyan-glow">
+              <span class="metric-label">SCANNER UPTIME</span>
+              <strong id="stk-uptime" class="metric-value mono-small">00:00:00</strong>
+              <span class="metric-sub">24/7 Webhook active</span>
+            </div>
+            <div class="metric-card blue-glow">
+              <span class="metric-label">AI SERVICE STATUS</span>
+              <strong id="stk-ai-status" class="metric-value mono-small">Offline</strong>
+              <span id="stk-ai-sub" class="metric-sub">Server-side Gemini</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="section-title">Overall Moderation Telemetry (Shared D1 SQLite)</h3>
+        <div class="metrics-grid">
+          <div class="metric-card cyan-glow">
+            <span class="metric-label">IMAGES SCANNED</span>
+            <strong id="stat-images" class="metric-value">0</strong>
+            <span class="metric-sub">Telegram photos</span>
+          </div>
+          <div class="metric-card blue-glow">
+            <span class="metric-label">STICKERS SCANNED</span>
+            <strong id="stat-stickers" class="metric-value">0</strong>
+            <span class="metric-sub">WEBP / TGS / WEBM</span>
+          </div>
+          <div class="metric-card purple-glow">
+            <span class="metric-label">GIFS &amp; VIDEOS</span>
+            <strong id="stat-videos" class="metric-value">0</strong>
+            <span class="metric-sub">Frame &amp; GIF checks</span>
+          </div>
+          <div class="metric-card crimson-glow">
+            <span class="metric-label">VIOLATIONS</span>
+            <strong id="stat-violations" class="metric-value">0</strong>
+            <span class="metric-sub">Confirmed violations</span>
+          </div>
+          <div class="metric-card emerald-glow">
+            <span class="metric-label">AUTO DELETED</span>
+            <strong id="stat-deleted" class="metric-value">0</strong>
+            <span class="metric-sub">Authorized cleanup</span>
+          </div>
+          <div class="metric-card amber-glow">
+            <span class="metric-label">UNCERTAIN / FAIL</span>
+            <strong id="stat-uncertain" class="metric-value">0</strong>
+            <span class="metric-sub">Admin review queue</span>
+          </div>
+        </div>
+
+        <h3 class="section-title">Recent Moderation Activity</h3>
+        <div id="recent-logs" class="logs-list"></div>
+      </section>
+
+      <!-- TAB 2: SCANNER & LOGS -->
+      <section id="tab-scanner" class="tab-panel">
+        <div class="cyber-card">
+          <h3>Live Sticker &amp; Media Scanner (Server-Side Gemini)</h3>
+          <p class="muted-note">
+            WEBP स्टिकर, WEBM वीडियो स्टिकर (पहला फ्रेम निकालकर) या इमेज चुनें। बिना फ्रेम वाली .tgs फ़ाइल कभी SAFE नहीं मानी जाती — वह UNCERTAIN के रूप में Admin रिव्यू के लिए जाती है।
+          </p>
+          <div class="form-row">
+            <label for="scan-media-kind">Sticker / Media Format</label>
+            <select id="scan-media-kind" class="cyber-input">
+              <option value="STICKER_STATIC">Static WEBP Sticker</option>
+              <option value="STICKER_VIDEO">Video WEBM Sticker (Frame Extract)</option>
+              <option value="STICKER_ANIMATED">Animated TGS Sticker</option>
+              <option value="PHOTO">Photo</option>
+              <option value="GIF">GIF Preview</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <input id="scan-file-input" type="file" accept="image/*,.webp,.tgs,.webm" class="cyber-input" />
+          </div>
+          <button id="run-scan-btn" class="btn btn-cyan full-width">Scan Sticker / Media via Shared Gemini Backend</button>
+          <pre id="scan-result-box" class="terminal-box hidden"></pre>
+        </div>
+
+        <h3 class="section-title">Full Audit Logs</h3>
+        <div id="all-logs" class="logs-list"></div>
+      </section>
+
+      <!-- TAB 3: AI CHAT -->
+      <section id="tab-chat" class="tab-panel">
+        <div class="cyber-card chat-shell">
+          <div class="chat-header">
+            <div>
+              <h3>Yuta AI Assistant (Hindi &amp; English)</h3>
+              <span class="safe-tag">Tokens &amp; Moderation Logs Isolated</span>
+            </div>
+          </div>
+          <div id="chat-messages" class="chat-messages"></div>
+          <form id="chat-form" class="chat-input-bar">
+            <input id="chat-input" type="text" class="cyber-input" placeholder="Hindi या English में पूछें..." required />
+            <button type="submit" class="btn btn-cyan">Send</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- TAB 4: SETTINGS -->
+      <section id="tab-settings" class="tab-panel">
+        <div class="cyber-card">
+          <h3>Shared HTTPS Backend Connection</h3>
+          <p class="muted-note">सुरक्षा नियम: Telegram Bot Token और Gemini API Key केवल Cloudflare Worker Secrets में रहते हैं — कभी भी इस Web App या APK में नहीं।</p>
+          <div class="form-row">
+            <label for="backend-url-input">Shared Backend HTTPS URL</label>
+            <input id="backend-url-input" type="url" class="cyber-input" placeholder="https://yuta-ai-worker.yourname.workers.dev" />
+          </div>
+          <div class="form-row">
+            <label for="admin-secret-input">Admin Access Passcode</label>
+            <input id="admin-secret-input" type="password" class="cyber-input" placeholder="Your ADMIN_SECRET from Cloudflare" />
+          </div>
+          <div class="hero-actions">
+            <button id="save-backend-btn" class="btn btn-cyan">Save &amp; Verify Backend</button>
+            <button id="test-connection-btn" class="btn btn-cyan">Test Telegram (getMe) &amp; Gemini</button>
+            <button id="setup-webhook-btn" class="btn btn-purple">Register 24/7 Webhook</button>
+            <button id="clear-backend-btn" class="btn btn-purple">Disconnect</button>
+          </div>
+          <pre id="backend-verify-output" class="terminal-box hidden"></pre>
+        </div>
+
+        <div class="cyber-card">
+          <h3>24/7 Sticker &amp; Group Moderation Controls</h3>
+          <div class="toggle-grid">
+            <label class="toggle-row"><span>Sticker Moderation (WEBP/TGS/WEBM)</span><input type="checkbox" id="tog-sticker" checked /></label>
+            <label class="toggle-row"><span>Image Moderation</span><input type="checkbox" id="tog-image" checked /></label>
+            <label class="toggle-row"><span>GIF Moderation</span><input type="checkbox" id="tog-gif" checked /></label>
+            <label class="toggle-row"><span>AI Chat (/chat)</span><input type="checkbox" id="tog-chat" checked /></label>
+            <label class="toggle-row"><span>Auto-Delete Confirmed Violations</span><input type="checkbox" id="tog-autodelete" checked /></label>
+            <label class="toggle-row"><span>Forward Uncertain to Admins</span><input type="checkbox" id="tog-notify" checked /></label>
+            <label class="toggle-row"><span>Zero-Disk Media Retention</span><input type="checkbox" id="tog-retention" checked /></label>
+          </div>
+          <div class="form-row">
+            <label for="sensitivity-select">Moderation Sensitivity</label>
+            <select id="sensitivity-select" class="cyber-input">
+              <option value="STRICT">Strict (कड़ी सुरक्षा)</option>
+              <option value="BALANCED" selected>Balanced (संतुलित)</option>
+              <option value="RELAXED">Relaxed (उदार)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="admin-user-ids-input">Authorized Admin User IDs (comma-separated)</label>
+            <input id="admin-user-ids-input" type="text" class="cyber-input" placeholder="e.g. 987654321, 112233445" />
+          </div>
+          <div class="form-row">
+            <label for="admin-alert-chat-input">Admin Alert Chat ID (for UNCERTAIN reviews)</label>
+            <input id="admin-alert-chat-input" type="text" class="cyber-input" placeholder="Your Telegram User ID or Admin Group ID" />
+          </div>
+          <button id="save-settings-btn" class="btn btn-cyan full-width">Update Shared Backend Settings</button>
+        </div>
+      </section>
+
+      <!-- TAB 5: HINDI TABLET GUIDE -->
+      <section id="tab-guide" class="tab-panel">
+        <div class="cyber-card">
+          <h3>24/7 Sticker Moderation + Web PWA + Android APK ($0 बजट)</h3>
+          <p class="guide-text">
+            1. <strong>असली 24/7 Sticker Monitoring (Cloudflare Worker + D1 SQLite):</strong> बिना किसी पेड सर्वर या PC के, Cloudflare Worker फ्री टियर पर Telegram Webhook 24/7 चलता है। हर स्टिकर <code>sticker_queue</code> में जाकर बैकग्राउंड में स्कैन होता है ताकि ग्रुप मैसेज कभी स्लो न हों।<br /><br />
+            2. <strong>Sticker Formats &amp; Free Limits:</strong><br />
+               • <strong>Static WEBP:</strong> सीधे स्कैन होता है।<br />
+               • <strong>Animated TGS:</strong> ये Lottie JSON होते हैं, इसलिए Telegram द्वारा दिया गया Thumbnail फ्रेम स्कैन होता है। Thumbnail न होने पर इसे SAFE नहीं माना जाता, बल्कि <code>UNCERTAIN</code> मार्क करके Admin को भेजा जाता है।<br />
+               • <strong>Video WEBM:</strong> Android ऐप <code>MediaMetadataRetriever</code> से फ्रेम निकालता है और Cloudflare Worker Thumbnail फ्रेम या सुरक्षित Admin फ़ॉरवर्ड का उपयोग करता है (फ़्री Worker में FFmpeg नहीं होता)।<br /><br />
+            3. <strong>Web PWA + Android APK (com.yuta.ai):</strong> दोनों एक ही Shared Cloudflare Worker URL और D1 डेटाबेस का उपयोग करते हैं। Telegram Bot Token या Gemini Key कभी Frontend या APK में नहीं डाली जाती।
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+      <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+      <button class="nav-btn" data-tab="scanner">Scanner</button>
+      <button class="nav-btn" data-tab="chat">AI Chat</button>
+      <button class="nav-btn" data-tab="settings">Settings</button>
+      <button class="nav-btn" data-tab="guide">Guide</button>
+    </nav>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

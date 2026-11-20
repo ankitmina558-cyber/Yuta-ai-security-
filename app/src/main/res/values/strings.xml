@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Yuta AI</string>
+    <string name="yuta_tagline">Telegram AI Moderation &amp; Assistant</string>
+    <string name="cd_yuta_logo">Yuta AI official shield logo</string>
+    <string name="cd_hero_banner">Yuta AI cyber command center banner</string>
+    <string name="firebase_notice_title">Shared Gemini Backend Not Connected</string>
+    <string name="firebase_notice_body">Connect your free Cloudflare Worker URL in Settings for live Gemini AI moderation and 24/7 webhook scanning. Unscanned media is NEVER marked safe.</string>
+</resources>

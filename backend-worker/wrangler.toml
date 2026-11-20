@@ -1,0 +1,24 @@
+name = "yuta-ai-worker"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+GEMINI_MODEL = "gemini-2.5-flash"
+
+# Optional Free-Tier Cron Trigger (retries failed/pending sticker scans every minute):
+# [triggers]
+# crons = ["* * * * *"]
+
+# After creating your free D1 database in Cloudflare Dashboard -> Workers & Pages -> D1,
+# bind it as "DB" in Settings -> Bindings or uncomment below:
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "yuta_ai_db"
+# database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# Add these as Encrypted Secrets in Cloudflare Dashboard -> Settings -> Variables and Secrets:
+# TELEGRAM_BOT_TOKEN = "your_botfather_token"
+# GEMINI_API_KEY = "your_free_google_ai_studio_key"
+# ADMIN_SECRET = "your_strong_admin_passcode"
+# TELEGRAM_WEBHOOK_SECRET = "optional_random_webhook_secret"
+# ADMIN_ALERT_CHAT_ID = "optional_telegram_chat_id_for_uncertain_sticker_reviews"

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="yuta_deep_black">#FF060913</color>
+    <color name="yuta_neon_cyan">#FF00F5FF</color>
+    <color name="yuta_electric_blue">#FF2979FF</color>
+    <color name="yuta_neon_purple">#FFB429F9</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

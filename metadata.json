@@ -1,0 +1,6 @@
+{
+  "name": "Yuta AI",
+  "description": "Futuristic Telegram AI group moderation bot and bilingual Gemini assistant built for Android tablets.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
